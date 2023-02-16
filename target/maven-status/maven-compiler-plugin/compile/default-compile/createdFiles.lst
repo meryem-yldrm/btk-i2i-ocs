@@ -1,5 +1,7 @@
 com\i2i\ocs\OcsApplication.class
+com\i2i\btk\suncell\sf\SfOperations\Kafka\KafkaModel.class
+com\i2i\ocs\repo\VoltDBRepo.class
 com\i2i\ocs\model\Usage.class
 com\i2i\ocs\service\OcsService.class
-com\i2i\ocs\repo\VoltDBRepo.class
+com\i2i\ocs\Kafka\KafkaConfig.class
 com\i2i\ocs\api\OcsController.class
