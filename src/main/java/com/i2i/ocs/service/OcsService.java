@@ -1,30 +1,30 @@
 package com.i2i.ocs.service;
 
-import com.i2i.ocs.model.Usage;
+import com.i2i.btk.suncell.sf.SfOperations.Kafka.KafkaModel;
 import com.i2i.ocs.repo.VoltDBRepo;
+import jdk.jpackage.internal.Log;
 import org.springframework.stereotype.Service;
-import com.i2i.project.voltdb.VoltDbOperations;
 
 @Service
 public class OcsService {
-    private VoltDbOperations voltDbOperation;
+    private VoltDBRepo voltDBRepo;
     //private VoltDBRepo voltDBRepo;
 
     public OcsService(){
-        voltDbOperation = new VoltDbOperations();
+        voltDBRepo = new VoltDBRepo();
     }
-    public void userUsage(Usage usage){
-        if(usage.getService().equalsIgnoreCase("voice")){
-            voltDbOperation.sendVoiceAmount(usage.getMsisdn(), usage.getAmount());
-        } else if (usage.getService().equalsIgnoreCase("sms")) {
-            voltDbOperation.sendSmsAmount(usage.getMsisdn(), usage.getAmount());
-        }else if(usage.getService().equalsIgnoreCase("data")){
-            voltDbOperation.sendDataAmount(usage.getMsisdn(), usage.getAmount());
+    public void userUsage(KafkaModel kafkaModel){
+        if(kafkaModel.getDataType().equalsIgnoreCase("voice")){
+            voltDBRepo.sendVoiceAmount(kafkaModel.getMsisdn(), kafkaModel.getAmount());
+        } else if (kafkaModel.getDataType().equalsIgnoreCase("sms")) {
+            voltDBRepo.sendSmsAmount(kafkaModel.getMsisdn(), kafkaModel.getAmount());
+        }else if(kafkaModel.getDataType().equalsIgnoreCase("data")){
+            voltDBRepo.sendDataAmount(kafkaModel.getMsisdn(), kafkaModel.getAmount());
         }else{
-            //Buraya log4J yatptıktan sonra log bas beklenmeyen bir servis ismi geldi diye.
+            Log.info("Beklenmeyen bir servis ismi geldi.");
         }
 
-        //usage ı Kafkayada  gönder.
+
 
     }
 }
